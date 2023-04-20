@@ -1,5 +1,6 @@
 const winston = require("winston");
 const dotenv = require("dotenv");
+const path = require("path");
 dotenv.config();
 
 const dateFormat = () => new Date(Date.now()).toLocaleDateString();
@@ -7,6 +8,7 @@ const dateFormat = () => new Date(Date.now()).toLocaleDateString();
 class LoggerService {
   constructor(route) {
     this.route = route;
+    const logFilePath = path.join(__dirname, "..", "logs");
     this.logger = winston.createLogger({
       level: "info",
       format: winston.format.combine(
@@ -15,8 +17,13 @@ class LoggerService {
       ),
       transports: [
         new winston.transports.Console(),
-        new winston.transports.File({ filename: "error.log", level: "error" }),
-        new winston.transports.File({ filename: "combined.log" }),
+        new winston.transports.File({
+          filename: path.join(logFilePath, "error.log"),
+          level: "error",
+        }),
+        new winston.transports.File({
+          filename: path.join(logFilePath, "combined.log"),
+        }),
       ],
     });
   }
