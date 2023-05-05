@@ -28,7 +28,7 @@ exports.addComment = async (req, res) => {
     const { postId, text } = req.body;
     const token = req.headers.authorization || req.headers.Authorization;
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const createdBy = decoded.userId;
+    const createdBy = decoded.id;
 
     const post = await Post.findById(postId);
 
