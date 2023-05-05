@@ -19,7 +19,13 @@ exports.createPost = async (req, res) => {
     res.status(201).json({ post });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    if (error instanceof jwt.JsonWebTokenError) {
+      res.status(401).json({ message: "Invalid token" });
+    } else if (error instanceof jwt.TokenExpiredError) {
+      res.status(401).json({ message: "Token expired" });
+    } else {
+      res.status(500).json({ message: "Server error" });
+    }
   }
 };
 
@@ -48,6 +54,12 @@ exports.addComment = async (req, res) => {
     res.status(201).json({ post });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    if (error instanceof jwt.JsonWebTokenError) {
+      res.status(401).json({ message: "Invalid token" });
+    } else if (error instanceof jwt.TokenExpiredError) {
+      res.status(401).json({ message: "Token expired" });
+    } else {
+      res.status(500).json({ message: "Server error" });
+    }
   }
 };
