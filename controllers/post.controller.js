@@ -26,7 +26,7 @@ exports.createPost = async (req, res) => {
 exports.addComment = async (req, res) => {
   try {
     const { postId, text } = req.body;
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req.headers.authorization || req.headers.Authorization;
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const createdBy = decoded.userId;
 

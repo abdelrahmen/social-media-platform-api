@@ -61,7 +61,7 @@ exports.loginUser = async (req, res) => {
       expiresIn: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30, //1 month
     });
 
-    logger.info("User logged in successfully in loginUser function");
+    logger.info(`User ${user._id} logged in successfully in loginUser function`);
     res.status(200).json({ token });
   } catch (error) {
     logger.error(`Error in loginUser function: ${error.message}`);
